@@ -151,18 +151,18 @@ class Route53API extends RESTDataSource {
   async deleteHostedZone(id) {
     this.setParams();
     this.setupClient();
-    let hostedzone = [];
+    let hostedzone_change_info = [];
     try {
       let data = await this.client.send(
         new DeleteHostedZoneCommand({
           Id: id,
         })
       );
-      hostedzone = data.HostedZone;
+      hostedzone_change_info = data.ChangeInfo;
     } catch (err) {
       console.log("Error", err);
     }
-    return hostedzone;
+    return hostedzone_change_info;
   }
   async getResourceRecordSets(id) {
     this.setParams();
