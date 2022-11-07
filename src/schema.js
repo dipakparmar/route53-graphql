@@ -86,7 +86,7 @@ const typeDefs = gql`
     Comment: String
   }
 
-  type PrivateHostedVPC {
+  input PrivateHostedVPC {
     VPCId: String
     VPCRegion: String
   }
