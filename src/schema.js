@@ -20,7 +20,7 @@ const typeDefs = gql`
       comment: String
     ): HostedZone
     update_hostedzone(id: String!, name: String!): HostedZone
-    delete_hostedzone(id: String!): HostedZone
+    delete_hostedzone(id: String!): HostedZoneChangeInfo
     insert_recordset(RecordSet: RecordSetInput!): RecordSet
     update_recordset(RecordSet: RecordSetInput!): RecordSet
   }
@@ -77,6 +77,18 @@ const typeDefs = gql`
   type ReusableDelegationSetLimit {
     Type: String
     Value: Int
+  }
+
+  type HostedZoneChangeInfo {
+    Id: String
+    Status: String
+    SubmittedAt: String
+    Comment: String
+  }
+
+  type PrivateHostedVPC {
+    VPCId: String
+    VPCRegion: String
   }
 `;
 
