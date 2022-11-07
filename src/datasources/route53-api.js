@@ -122,5 +122,6 @@ class Route53API extends RESTDataSource {
     return recordsets;
   }
 
+}
 
 module.exports = Route53API;
