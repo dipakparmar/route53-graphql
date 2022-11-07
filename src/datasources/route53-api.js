@@ -2,6 +2,7 @@ const { RESTDataSource } = require("apollo-datasource-rest");
 import {
   Route53Client,
   ListHostedZonesCommand,
+  ListResourceRecordSetsCommand,
 } from "@aws-sdk/client-route-53";
 
 class Route53API extends RESTDataSource {
@@ -54,6 +55,35 @@ class Route53API extends RESTDataSource {
     }
     return hostedzones;
   }
-}
+
+  async getResourceRecordSets(id) {
+    this.setParams();
+    this.setupClient();
+    let recordsets = [];
+    try {
+      let data = await this.client.send(
+        new ListResourceRecordSetsCommand({
+          HostedZoneId: id,
+          MaxItems: "100",
+        })
+      );
+      recordsets = data.ResourceRecordSets;
+      while (data.IsTruncated) {
+        data = await this.client.send(
+          new ListResourceRecordSetsCommand({
+            HostedZoneId: id,
+            MaxItems: "100",
+            StartRecordName: data.NextRecordName,
+            StartRecordType: data.NextRecordType,
+          })
+        );
+        recordsets = recordsets.concat(data.ResourceRecordSets);
+      }
+    } catch (err) {
+      console.log("Error", err);
+    }
+    return recordsets;
+  }
+
 
 module.exports = Route53API;

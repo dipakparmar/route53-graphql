@@ -3,6 +3,7 @@ const { gql } = require("apollo-server-cloudflare");
 const typeDefs = gql`
   type Query {
     hostedzones: [HostedZone]
+    hostedzone_recordsets(id: String): [RecordSet]
   }
 
   type HostedZone {
