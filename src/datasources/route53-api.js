@@ -1,14 +1,58 @@
 const { RESTDataSource } = require("apollo-datasource-rest");
+import {
+  Route53Client,
+  ListHostedZonesCommand,
+} from "@aws-sdk/client-route-53";
 
 class Route53API extends RESTDataSource {
-  constructor() {
+  constructor(context) {
     super();
+    this.params = {};
+    this.context = context;
+    this.client;
+  }
+
+  setParams() {
+    this.params.accessKeyId = this.context.headers.get("x-access-key");
+    this.params.secretAccessKey = this.context.headers.get("x-access-secret");
+    this.params.sessionToken = this.context.headers.get("x-session-token");
+  }
+
+  setupClient() {
+    this.client = new Route53Client({
+      region: "us-east-1",
+      credentials: {
+        accessKeyId: this.params.accessKeyId,
+        secretAccessKey: this.params.secretAccessKey,
+        sessionToken: this.params.sessionToken,
+      },
+    });
   }
 
   async getHostedZones() {
-    // user route53 sdk to get hosted zones
-    // return hosted zones
-    return [];
+    this.setParams();
+    this.setupClient();
+    let hostedzones = [];
+    try {
+      let data = await this.client.send(
+        new ListHostedZonesCommand({
+          MaxItems: "100",
+        })
+      );
+      hostedzones = data.HostedZones;
+      while (data.IsTruncated) {
+        data = await this.client.send(
+          new ListHostedZonesCommand({
+            MaxItems: "100",
+            Marker: data.NextMarker,
+          })
+        );
+        hostedzones = hostedzones.concat(data.HostedZones);
+      }
+    } catch (err) {
+      console.log("Error", err);
+    }
+    return hostedzones;
   }
 }
 
