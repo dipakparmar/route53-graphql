@@ -1,18 +1,18 @@
-const { ApolloServer } = require('apollo-server-cloudflare')
+const { ApolloServer } = require("apollo-server-cloudflare");
 const {
   graphqlCloudflare,
-} = require('apollo-server-cloudflare/dist/cloudflareApollo')
+} = require("apollo-server-cloudflare/dist/cloudflareApollo");
 
-const KVCache = require('../kv-cache')
-const Route53API = require('../datasources/route53-api')
-const resolvers = require('../resolvers')
-const typeDefs = require('../schema')
+const KVCache = require("../kv-cache");
+const Route53API = require("../datasources/route53-api");
+const resolvers = require("../resolvers");
+const typeDefs = require("../schema");
 
 const dataSources = () => ({
   route53API: new Route53API(),
-})
+});
 
-const kvCache = { cache: new KVCache() }
+const kvCache = { cache: new KVCache() };
 
 const createServer = (graphQLOptions) =>
   new ApolloServer({
@@ -23,17 +23,17 @@ const createServer = (graphQLOptions) =>
     ...(graphQLOptions.kvCache ? kvCache : {}),
     context: ({ request }) => {
       return {
-        headers: request.headers
+        headers: request.headers,
       };
     },
-  })
+  });
 
 const handler = async (request, graphQLOptions) => {
-  const server = createServer(graphQLOptions)
-  await server.start()
+  const server = createServer(graphQLOptions);
+  await server.start();
   return graphqlCloudflare(() => server.createGraphQLServerOptions(request))(
-    request,
-  )
-}
+    request
+  );
+};
 
-module.exports = handler
+module.exports = handler;

@@ -17,7 +17,14 @@ module.exports = {
   Mutation: {
     insert_hostedzone: async (
       _,
-      { name, delegationset_id, is_private_zone, vpc, caller_reference, comment },
+      {
+        name,
+        delegationset_id,
+        is_private_zone,
+        vpc,
+        caller_reference,
+        comment,
+      },
       { dataSources, context }
     ) =>
       dataSources.route53API.createHostedZone(

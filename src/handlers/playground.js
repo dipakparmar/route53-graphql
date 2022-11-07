@@ -499,10 +499,10 @@ const html = (baseEndpoint) => `
     </script>
   </body>
 </html>
-`
+`;
 
-const headers = { 'Content-Type': 'text/html' }
+const headers = { "Content-Type": "text/html" };
 const handler = (request, { baseEndpoint }) =>
-  new Response(html(baseEndpoint), { headers })
+  new Response(html(baseEndpoint), { headers });
 
-module.exports = handler
+module.exports = handler;

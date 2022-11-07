@@ -1,14 +1,14 @@
-import apollo from './handlers/apollo'
-import playground from './handlers/playground'
-import setCors from './utils/setCors'
+import apollo from "./handlers/apollo";
+import playground from "./handlers/playground";
+import setCors from "./utils/setCors";
 
 const graphQLOptions = {
   // Set the path for the GraphQL server
-  baseEndpoint: '/v1/graphql',
+  baseEndpoint: "/v1/graphql",
 
   // Set the path for the GraphQL playground
   // This option can be removed to disable the playground route
-  playgroundEndpoint: '/playground',
+  playgroundEndpoint: "/playground",
 
   // When a request's path isn't matched, forward it to the origin
   forwardUnmatchedRequestsToOrigin: false,
@@ -21,10 +21,10 @@ const graphQLOptions = {
   // or pass an object to configure each header
   // cors: true,
   cors: {
-    allowCredentials: 'true',
-    allowHeaders: 'Content-type',
-    allowOrigin: '*',
-    allowMethods: 'GET, POST',
+    allowCredentials: "true",
+    allowHeaders: "Content-type",
+    allowOrigin: "*",
+    allowMethods: "GET, POST",
   },
 
   // Enable KV caching for external REST data source requests
@@ -32,37 +32,40 @@ const graphQLOptions = {
   // WORKERS_GRAPHQL_CACHE in your wrangler.toml file for this to
   // work! See the project README for more information.
   kvCache: false,
-}
+};
 
 const handleRequest = async (request) => {
-  const url = new URL(request.url)
+  const url = new URL(request.url);
   try {
     if (url.pathname === graphQLOptions.baseEndpoint) {
       const response =
-        request.method === 'OPTIONS'
-          ? new Response('', { status: 204 })
-          : await apollo(request, graphQLOptions)
+        request.method === "OPTIONS"
+          ? new Response("", { status: 204 })
+          : await apollo(request, graphQLOptions);
       if (graphQLOptions.cors) {
-        setCors(response, graphQLOptions.cors)
+        setCors(response, graphQLOptions.cors);
       }
-      return response
+      return response;
     } else if (
       graphQLOptions.playgroundEndpoint &&
       url.pathname === graphQLOptions.playgroundEndpoint
     ) {
-      return playground(request, graphQLOptions)
+      return playground(request, graphQLOptions);
     } else if (graphQLOptions.forwardUnmatchedRequestsToOrigin) {
-      return fetch(request)
+      return fetch(request);
     } else {
-      return new Response('', { status: 302, headers: { Location: 'https://github.com/dipakparmar/route53-graphql' } })
+      return new Response("", {
+        status: 302,
+        headers: { Location: "https://github.com/dipakparmar/route53-graphql" },
+      });
     }
   } catch (err) {
-    return new Response(graphQLOptions.debug ? err : 'Something went wrong', {
+    return new Response(graphQLOptions.debug ? err : "Something went wrong", {
       status: 500,
-    })
+    });
   }
-}
+};
 
-addEventListener('fetch', (event) => {
-  event.respondWith(handleRequest(event.request))
-})
+addEventListener("fetch", (event) => {
+  event.respondWith(handleRequest(event.request));
+});
