@@ -1,0 +1,22 @@
+name = "route-53"
+
+
+workers_dev = true
+compatibility_date = "2022-10-31"
+main = "./src/index.js"
+node_compat = true
+
+# Enable a kv-namespace to use the KV caching feature
+#
+# kv-namespaces = [
+#   { binding = "WORKERS_GRAPHQL_CACHE", id = "" }
+# ]
+
+[build]
+command = "npm run build"
+
+[dev]
+ip = "0.0.0.0"
+port = 8787
+local_protocol="http"
+upstream_protocol="https"
