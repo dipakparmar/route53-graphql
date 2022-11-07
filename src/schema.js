@@ -4,6 +4,8 @@ const typeDefs = gql`
   type Query {
     hostedzones: [HostedZone]
     hostedzone_recordsets(id: String): [RecordSet]
+    resusable_delegation_sets: [ReusableDelegationSet]
+    resusable_delegation_set_limit(id: String): ReusableDelegationSetLimitResponse
   }
 
   type Mutation {
@@ -52,6 +54,21 @@ const typeDefs = gql`
     values: [String]
   }
 
+  type ReusableDelegationSet {
+    Id: String
+    CallerReference: String
+    NameServers: [String]
+  }
+
+  type ReusableDelegationSetLimitResponse {
+    Count: Int
+    Limit: ReusableDelegationSetLimit
+  }
+
+  type ReusableDelegationSetLimit {
+    Type: String
+    Value: Int
+  }
 `;
 
 module.exports = typeDefs;

@@ -1,6 +1,8 @@
 const { RESTDataSource } = require("apollo-datasource-rest");
 import {
   Route53Client,
+  GetReusableDelegationSetLimitCommand,
+  ListReusableDelegationSetsCommand,
   ListHostedZonesCommand,
   ListResourceRecordSetsCommand,
   ChangeResourceRecordSetsCommand,
@@ -34,6 +36,52 @@ class Route53API extends RESTDataSource {
     });
   }
 
+  async getReusableDelegationSets() {
+    this.setParams();
+    this.setupClient();
+    console.log("getReusableDelegationSets");
+    let delegationsets = [];
+    try {
+      let data = await this.client.send(
+        new ListReusableDelegationSetsCommand({
+          MaxItems: "100",
+        })
+      );
+      delegationsets = data.DelegationSets;
+      console.log("delegationsets", delegationsets);
+      while (data.IsTruncated) {
+        data = await this.client.send(
+          new ListReusableDelegationSetsCommand({
+            MaxItems: "100",
+            Marker: data.NextMarker,
+          })
+        );
+        delegationsets = delegationsets.concat(data.DelegationSets);
+      }
+    } catch (err) {
+      console.log("Error", err);
+    }
+    return delegationsets;
+  }
+
+  async getReusableDelegationSetLimit(id) {
+    this.setParams();
+    this.setupClient();
+    let limit = {};
+    try {
+      let data = await this.client.send(
+        new GetReusableDelegationSetLimitCommand({
+          DelegationSetId: id,
+          Type: "MAX_ZONES_BY_REUSABLE_DELEGATION_SET",
+        })
+      );
+      limit = data;
+    } catch (err) {
+      console.log("Error", err);
+    }
+    return limit;
+  }
+  
   async getHostedZones() {
     this.setParams();
     this.setupClient();
