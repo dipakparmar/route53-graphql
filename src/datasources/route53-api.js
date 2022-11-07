@@ -81,7 +81,7 @@ class Route53API extends RESTDataSource {
     }
     return limit;
   }
-  
+
   async getHostedZones() {
     this.setParams();
     this.setupClient();
@@ -108,15 +108,37 @@ class Route53API extends RESTDataSource {
     return hostedzones;
   }
 
-  async createHostedZone(name) {
+  async createHostedZone(
+    name,
+    delegationset_id,
+    is_private_zone = false,
+    vpc,
+    caller_reference,
+    comment
+  ) {
     this.setParams();
     this.setupClient();
     let hostedzone = [];
+    let hostedzone_config = {};
+    if (comment) {
+      hostedzone_config.Comment = comment;
+    }
+    if (is_private_zone) {
+      hostedzone_config.PrivateZone = is_private_zone;
+    }
+
     try {
       let data = await this.client.send(
         new CreateHostedZoneCommand({
           Name: name,
-          CallerReference: "" + Date.now(),
+          CallerReference: caller_reference
+            ? caller_reference
+            : "" + Date.now().toLocaleString(),
+          ...(is_private_zone && { VPC: vpc }),
+          ...((is_private_zone || comment) && {
+            HostedZoneConfig: hostedzone_config,
+          }),
+          ...(delegationset_id && { DelegationSetId: delegationset_id }),
         })
       );
       hostedzone = data.HostedZone;

@@ -15,8 +15,20 @@ module.exports = {
   },
 
   Mutation: {
-    insert_hostedzone: async (_, { name }, { dataSources, context }) =>
-      dataSources.route53API.createHostedZone(name, context),
+    insert_hostedzone: async (
+      _,
+      { name, delegationset_id, is_private_zone, vpc, caller_reference, comment },
+      { dataSources, context }
+    ) =>
+      dataSources.route53API.createHostedZone(
+        name,
+        delegationset_id,
+        is_private_zone,
+        vpc,
+        caller_reference,
+        comment,
+        context
+      ),
     update_hostedzone: async (_, { id, name }, { dataSources, context }) =>
       dataSources.route53API.updateHostedZone(id, name, context),
     delete_hostedzone: async (_, { id }, { dataSources, context }) =>

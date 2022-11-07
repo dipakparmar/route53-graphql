@@ -5,11 +5,20 @@ const typeDefs = gql`
     hostedzones: [HostedZone]
     hostedzone_recordsets(id: String): [RecordSet]
     resusable_delegation_sets: [ReusableDelegationSet]
-    resusable_delegation_set_limit(id: String): ReusableDelegationSetLimitResponse
+    resusable_delegation_set_limit(
+      id: String
+    ): ReusableDelegationSetLimitResponse
   }
 
   type Mutation {
-    insert_hostedzone(name: String!): HostedZone
+    insert_hostedzone(
+      name: String!
+      delegationset_id: String
+      is_private_zone: Boolean
+      vpc: PrivateHostedVPC
+      caller_reference: String
+      comment: String
+    ): HostedZone
     update_hostedzone(id: String!, name: String!): HostedZone
     delete_hostedzone(id: String!): HostedZone
     insert_recordset(RecordSet: RecordSetInput!): RecordSet
