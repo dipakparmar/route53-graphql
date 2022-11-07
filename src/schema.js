@@ -6,6 +6,12 @@ const typeDefs = gql`
     hostedzone_recordsets(id: String): [RecordSet]
   }
 
+  type Mutation {
+    insert_hostedzone(name: String!): HostedZone
+    update_hostedzone(id: ID!, name: String!): HostedZone
+    delete_hostedzone(id: ID!): HostedZone
+  }
+
   type HostedZone {
     Id: String
     Name: String

@@ -3,6 +3,9 @@ import {
   Route53Client,
   ListHostedZonesCommand,
   ListResourceRecordSetsCommand,
+  CreateHostedZoneCommand,
+  DeleteHostedZoneCommand,
+  UpdateHostedZoneCommentCommand,
 } from "@aws-sdk/client-route-53";
 
 class Route53API extends RESTDataSource {
@@ -56,6 +59,40 @@ class Route53API extends RESTDataSource {
     return hostedzones;
   }
 
+  async createHostedZone(name) {
+    this.setParams();
+    this.setupClient();
+    let hostedzone = [];
+    try {
+      let data = await this.client.send(
+        new CreateHostedZoneCommand({
+          Name: name,
+          CallerReference: "" + Date.now(),
+        })
+      );
+      hostedzone = data.HostedZone;
+    } catch (err) {
+      console.log("Error", err);
+    }
+    return hostedzone;
+  }
+
+  async deleteHostedZone(id) {
+    this.setParams();
+    this.setupClient();
+    let hostedzone = [];
+    try {
+      let data = await this.client.send(
+        new DeleteHostedZoneCommand({
+          Id: id,
+        })
+      );
+      hostedzone = data.HostedZone;
+    } catch (err) {
+      console.log("Error", err);
+    }
+    return hostedzone;
+  }
   async getResourceRecordSets(id) {
     this.setParams();
     this.setupClient();
