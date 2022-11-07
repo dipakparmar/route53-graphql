@@ -1,4 +1,4 @@
-name = "route-53"
+name = "route53"
 
 
 workers_dev = true
