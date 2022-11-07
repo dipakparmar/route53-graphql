@@ -8,8 +8,10 @@ const typeDefs = gql`
 
   type Mutation {
     insert_hostedzone(name: String!): HostedZone
-    update_hostedzone(id: ID!, name: String!): HostedZone
-    delete_hostedzone(id: ID!): HostedZone
+    update_hostedzone(id: String!, name: String!): HostedZone
+    delete_hostedzone(id: String!): HostedZone
+    insert_recordset(RecordSet: RecordSetInput!): RecordSet
+    update_recordset(RecordSet: RecordSetInput!): RecordSet
   }
 
   type HostedZone {
@@ -30,6 +32,26 @@ const typeDefs = gql`
     ServicePrincipal: String
     Description: String
   }
+
+  type ResourceRecord {
+    Value: String
+  }
+
+  type RecordSet {
+    Name: String
+    Type: String
+    TTL: Int
+    ResourceRecords: [ResourceRecord]
+  }
+
+  input RecordSetInput {
+    id: String
+    name: String
+    type: String
+    ttl: Int
+    values: [String]
+  }
+
 `;
 
 module.exports = typeDefs;

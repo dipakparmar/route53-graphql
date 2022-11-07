@@ -3,6 +3,7 @@ import {
   Route53Client,
   ListHostedZonesCommand,
   ListResourceRecordSetsCommand,
+  ChangeResourceRecordSetsCommand,
   CreateHostedZoneCommand,
   DeleteHostedZoneCommand,
   UpdateHostedZoneCommentCommand,
@@ -122,6 +123,95 @@ class Route53API extends RESTDataSource {
     return recordsets;
   }
 
+  async createRecordSet(id, name, type, ttl, values) {
+    this.setParams();
+    this.setupClient();
+    let recordsets = [];
+    try {
+      let data = await this.client.send(
+        new ChangeResourceRecordSetsCommand({
+          HostedZoneId: id,
+          ChangeBatch: {
+            Changes: [
+              {
+                Action: "UPSERT",
+                ResourceRecordSet: {
+                  Name: name,
+                  Type: type,
+                  TTL: ttl,
+                  ResourceRecords: values,
+                },
+              },
+            ],
+          },
+        })
+      );
+      recordsets = data.ResourceRecordSets;
+    } catch (err) {
+      console.log("Error", err);
+    }
+    return recordsets;
+  }
+
+  async deleteRecordSet(id, name, type, ttl, values) {
+    this.setParams();
+    this.setupClient();
+    let recordsets = [];
+    try {
+      let data = await this.client.send(
+        new ChangeResourceRecordSetsCommand({
+          HostedZoneId: id,
+          ChangeBatch: {
+            Changes: [
+              {
+                Action: "DELETE",
+                ResourceRecordSet: {
+                  Name: name,
+                  Type: type,
+                  TTL: ttl,
+                  ResourceRecords: values,
+                },
+              },
+            ],
+          },
+        })
+      );
+      recordsets = data.ResourceRecordSets;
+    } catch (err) {
+      console.log("Error", err);
+    }
+    return recordsets;
+  }
+
+  async updateRecordSet(id, name, type, ttl, values) {
+    this.setParams();
+    this.setupClient();
+    let recordsets = [];
+    try {
+      let data = await this.client.send(
+        new ChangeResourceRecordSetsCommand({
+          HostedZoneId: id,
+          ChangeBatch: {
+            Changes: [
+              {
+                Action: "UPSERT",
+                ResourceRecordSet: {
+                  Name: name,
+                  Type: type,
+                  TTL: ttl,
+                  ResourceRecords: values,
+                },
+              },
+            ],
+          },
+        })
+      );
+      recordsets = data.ResourceRecordSets;
+    } catch (err) {
+      console.log("Error", err);
+    }
+    return recordsets;
+  }
 }
 
 module.exports = Route53API;
