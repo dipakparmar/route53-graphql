@@ -4,6 +4,7 @@ import {
   GetReusableDelegationSetCommand,
   GetReusableDelegationSetLimitCommand,
   ListReusableDelegationSetsCommand,
+  CreateReusableDelegationSetCommand,
   ListHostedZonesCommand,
   ListResourceRecordSetsCommand,
   ChangeResourceRecordSetsCommand,
@@ -80,7 +81,6 @@ class Route53API extends RESTDataSource {
     return delegationset;
   }
 
-
   async getReusableDelegationSetLimit(id) {
     this.setParams();
     this.setupClient();
@@ -97,6 +97,27 @@ class Route53API extends RESTDataSource {
       console.log("Error", err);
     }
     return limit;
+  }
+
+  async createReusableDelegationSetCommand(
+    caller_reference,
+    hostedzone_id,
+  ) {
+    this.setParams();
+    this.setupClient();
+    let delegationset;
+    try {
+      let data = await this.client.send(
+        new CreateReusableDelegationSetCommand({
+          CallerReference: caller_reference,
+          ...(hostedzone_id && { HostedZoneId: hostedzone_id }),
+        })
+      );
+     
+    } catch (err) {
+      console.log("Error", err);
+    }
+    return delegationset;
   }
 
   async getHostedZones() {

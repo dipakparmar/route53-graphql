@@ -22,6 +22,7 @@ const typeDefs = gql`
     ): HostedZone
     update_hostedzone(id: String!, comment: String!): HostedZone
     delete_hostedzone(id: String!): HostedZoneChangeInfo
+    insert_reusable_delegation_set(caller_reference: String!, hostedzone_id: String): ReusableDelegationSetResponse
     insert_recordset(RecordSet: RecordSetInput!): RecordSet
     update_recordset(RecordSet: RecordSetInput!): RecordSet
   }
