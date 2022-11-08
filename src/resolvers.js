@@ -4,9 +4,10 @@ module.exports = {
       dataSources.route53API.getHostedZones(context),
     hostedzone_recordsets: async (_, { id }, { dataSources, context }) =>
       dataSources.route53API.getResourceRecordSets(id, context),
-
     resusable_delegation_sets: async (_, {}, { dataSources, context }) =>
       dataSources.route53API.getReusableDelegationSets(context),
+    resusable_delegation_set: async (_, { id }, { dataSources, context }) =>
+      dataSources.route53API.getReusableDelegationSet(id, context),
     resusable_delegation_set_limit: async (
       _,
       { id },

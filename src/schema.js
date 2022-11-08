@@ -5,6 +5,7 @@ const typeDefs = gql`
     hostedzones: [HostedZone]
     hostedzone_recordsets(id: String): [RecordSet]
     resusable_delegation_sets: [ReusableDelegationSet]
+    resusable_delegation_set(id: String): ReusableDelegationSet
     resusable_delegation_set_limit(
       id: String
     ): ReusableDelegationSetLimitResponse

@@ -1,6 +1,7 @@
 const { RESTDataSource } = require("apollo-datasource-rest");
 import {
   Route53Client,
+  GetReusableDelegationSetCommand,
   GetReusableDelegationSetLimitCommand,
   ListReusableDelegationSetsCommand,
   ListHostedZonesCommand,
@@ -39,7 +40,6 @@ class Route53API extends RESTDataSource {
   async getReusableDelegationSets() {
     this.setParams();
     this.setupClient();
-    console.log("getReusableDelegationSets");
     let delegationsets = [];
     try {
       let data = await this.client.send(
@@ -48,7 +48,6 @@ class Route53API extends RESTDataSource {
         })
       );
       delegationsets = data.DelegationSets;
-      console.log("delegationsets", delegationsets);
       while (data.IsTruncated) {
         data = await this.client.send(
           new ListReusableDelegationSetsCommand({
@@ -63,6 +62,24 @@ class Route53API extends RESTDataSource {
     }
     return delegationsets;
   }
+
+  async getReusableDelegationSet(id) {
+    this.setParams();
+    this.setupClient();
+    let delegationset;
+    try {
+      let data = await this.client.send(
+        new GetReusableDelegationSetCommand({
+          Id: id,
+        })
+      );
+      delegationset = data.DelegationSet;
+    } catch (err) {
+      console.log("Error", err);
+    }
+    return delegationset;
+  }
+
 
   async getReusableDelegationSetLimit(id) {
     this.setParams();
