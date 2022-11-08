@@ -23,6 +23,7 @@ const typeDefs = gql`
     update_hostedzone(id: String!, comment: String!): HostedZone
     delete_hostedzone(id: String!): HostedZoneChangeInfo
     insert_reusable_delegation_set(caller_reference: String!, hostedzone_id: String): ReusableDelegationSetResponse
+    delete_reusable_delegation_set(id: String!): GeneralResponse
     insert_recordset(RecordSet: RecordSetInput!): RecordSet
     update_recordset(RecordSet: RecordSetInput!): RecordSet
   }
@@ -91,6 +92,11 @@ const typeDefs = gql`
     Status: String
     SubmittedAt: String
     Comment: String
+  }
+
+  type GeneralResponse {
+    Status: String
+    Message: String
   }
 
   input PrivateHostedVPC {

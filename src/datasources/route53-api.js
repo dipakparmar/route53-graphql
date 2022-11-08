@@ -4,6 +4,7 @@ import {
   GetReusableDelegationSetCommand,
   GetReusableDelegationSetLimitCommand,
   ListReusableDelegationSetsCommand,
+  DeleteReusableDelegationSetCommand,
   CreateReusableDelegationSetCommand,
   ListHostedZonesCommand,
   ListResourceRecordSetsCommand,
@@ -99,10 +100,7 @@ class Route53API extends RESTDataSource {
     return limit;
   }
 
-  async createReusableDelegationSetCommand(
-    caller_reference,
-    hostedzone_id,
-  ) {
+  async createReusableDelegationSetCommand(caller_reference, hostedzone_id) {
     this.setParams();
     this.setupClient();
     let delegationset;
@@ -114,11 +112,29 @@ class Route53API extends RESTDataSource {
         })
       );
       delegationset = data;
-     
     } catch (err) {
       console.log("Error", err);
     }
     return delegationset;
+  }
+
+  async deleteReusableDelegationSet(id) {
+    this.setParams();
+    this.setupClient();
+    let result = {};
+    try {
+      let data = await this.client.send(
+        new DeleteReusableDelegationSetCommand({
+          Id: id,
+        })
+      );
+      result = data;
+    } catch (err) {
+      console.log("Error", err);
+    }
+    result.Status = "SUBMITTED";
+    result.Message = "Delegation set deletion has been submitted";
+    return result;
   }
 
   async getHostedZones() {
