@@ -41,14 +41,14 @@ class Route53API extends RESTDataSource {
   async getReusableDelegationSets() {
     this.setParams();
     this.setupClient();
-    let delegationsets = [];
+    let delegationsets_reponse = [];
     try {
       let data = await this.client.send(
         new ListReusableDelegationSetsCommand({
           MaxItems: "100",
         })
       );
-      delegationsets = data.DelegationSets;
+      delegationsets_reponse = data;
       while (data.IsTruncated) {
         data = await this.client.send(
           new ListReusableDelegationSetsCommand({
@@ -56,12 +56,12 @@ class Route53API extends RESTDataSource {
             Marker: data.NextMarker,
           })
         );
-        delegationsets = delegationsets.concat(data.DelegationSets);
+        delegationsets_reponse = delegationsets.concat(data);
       }
     } catch (err) {
       console.log("Error", err);
     }
-    return delegationsets;
+    return delegationsets_reponse;
   }
 
   async getReusableDelegationSet(id) {
@@ -74,7 +74,7 @@ class Route53API extends RESTDataSource {
           Id: id,
         })
       );
-      delegationset = data.DelegationSet;
+      delegationset = data;
     } catch (err) {
       console.log("Error", err);
     }
@@ -113,6 +113,7 @@ class Route53API extends RESTDataSource {
           ...(hostedzone_id && { HostedZoneId: hostedzone_id }),
         })
       );
+      delegationset = data;
      
     } catch (err) {
       console.log("Error", err);
