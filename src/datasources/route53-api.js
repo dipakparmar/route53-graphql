@@ -326,14 +326,25 @@ class Route53API extends RESTDataSource {
     return recordsets;
   }
 
-  async updateRecordSet(id, name, type, ttl, values) {
+  async updateRecordSet(hostedzone_id, recordset, comment) {
     this.setParams();
     this.setupClient();
-    let recordsets = [];
+    let changeInfo;
+    let { name, type, ttl, values } = recordset;
+    // values is type of string or string[], map them as {Value: value} in ResourceRecord[]
+    let resource_records = [];
+    if (typeof values === "string") {
+      resource_records.push({ Value: values });
+    } else {
+      resource_records = values.map((value) => {
+        return { Value: value };
+      });
+    }
+
     try {
       let data = await this.client.send(
         new ChangeResourceRecordSetsCommand({
-          HostedZoneId: id,
+          HostedZoneId: hostedzone_id,
           ChangeBatch: {
             Changes: [
               {
@@ -342,18 +353,19 @@ class Route53API extends RESTDataSource {
                   Name: name,
                   Type: type,
                   TTL: ttl,
-                  ResourceRecords: values,
+                  ResourceRecords: resource_records,
                 },
               },
             ],
+            ...comment && { Comment: comment },
           },
         })
       );
-      recordsets = data.ResourceRecordSets;
+      changeInfo = data.ChangeInfo;
     } catch (err) {
       console.log("Error", err);
     }
-    return recordsets;
+    return changeInfo;
   }
 }
 

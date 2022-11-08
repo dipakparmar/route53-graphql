@@ -21,11 +21,11 @@ const typeDefs = gql`
       comment: String
     ): HostedZone
     update_hostedzone(id: String!, comment: String!): HostedZone
-    delete_hostedzone(id: String!): HostedZoneChangeInfo
+    delete_hostedzone(id: String!): ChangeInfoResponse
     insert_reusable_delegation_set(caller_reference: String!, hostedzone_id: String): ReusableDelegationSetResponse
     delete_reusable_delegation_set(id: String!): GeneralResponse
     insert_recordset(RecordSet: RecordSetInput!): RecordSet
-    update_recordset(RecordSet: RecordSetInput!): RecordSet
+    update_recordset(hostedzone_id: String!, RecordSet: RecordSetInput!, comment: String): ChangeInfoResponse
   }
 
   type HostedZone {
@@ -87,7 +87,7 @@ const typeDefs = gql`
     Value: Int
   }
 
-  type HostedZoneChangeInfo {
+  type ChangeInfoResponse {
     Id: String
     Status: String
     SubmittedAt: String
