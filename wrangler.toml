@@ -1,5 +1,6 @@
 name = "route53"
 
+account_id = "b1b9a215d4f60f0fb1cea9faa8b73104"
 
 workers_dev = true
 compatibility_date = "2022-10-31"
@@ -12,8 +13,6 @@ node_compat = true
 #   { binding = "WORKERS_GRAPHQL_CACHE", id = "" }
 # ]
 
-[build]
-command = "npm run build"
 
 [dev]
 ip = "0.0.0.0"
