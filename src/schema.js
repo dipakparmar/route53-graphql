@@ -20,7 +20,7 @@ const typeDefs = gql`
       caller_reference: String
       comment: String
     ): HostedZone
-    update_hostedzone(id: String!, name: String!): HostedZone
+    update_hostedzone(id: String!, comment: String!): HostedZone
     delete_hostedzone(id: String!): HostedZoneChangeInfo
     insert_recordset(RecordSet: RecordSetInput!): RecordSet
     update_recordset(RecordSet: RecordSetInput!): RecordSet

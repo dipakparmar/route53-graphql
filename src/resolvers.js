@@ -37,8 +37,8 @@ module.exports = {
         comment,
         context
       ),
-    update_hostedzone: async (_, { id, name }, { dataSources, context }) =>
-      dataSources.route53API.updateHostedZone(id, name, context),
+    update_hostedzone: async (_, { id, comment }, { dataSources, context }) =>
+      dataSources.route53API.updateHostedZone(id, comment, context),
     delete_hostedzone: async (_, { id }, { dataSources, context }) =>
       dataSources.route53API.deleteHostedZone(id, context),
     update_recordset: async (_, { RecordSet }, { dataSources, context }) =>

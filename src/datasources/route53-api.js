@@ -165,6 +165,24 @@ class Route53API extends RESTDataSource {
     return hostedzone;
   }
 
+  async updateHostedZone(id, comment) {
+    this.setParams();
+    this.setupClient();
+    let hostedzone = [];
+    try {
+      let data = await this.client.send(
+        new UpdateHostedZoneCommentCommand({
+          Id: id,
+          Comment: comment,
+        })
+      );
+      hostedzone = data.HostedZone;
+    } catch (err) {
+      console.log("Error", err);
+    }
+    return hostedzone;
+  }
+
   async deleteHostedZone(id) {
     this.setParams();
     this.setupClient();
