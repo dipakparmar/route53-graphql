@@ -57,8 +57,8 @@ module.exports = {
       { id },
       { dataSources, context }
     ) => dataSources.route53API.deleteReusableDelegationSet(id, context),
-    update_recordset: async (_, { hostedzone_id, RecordSet, comment }, { dataSources, context }) =>
-      dataSources.route53API.updateRecordSet(hostedzone_id, RecordSet, comment, context),
+    update_recordsets: async (_, { hostedzone_id, RecordSet, comment }, { dataSources, context }) =>
+      dataSources.route53API.updateRecordSets(hostedzone_id, RecordSet, comment, context),
     insert_recordset: async (_, { RecordSet }, { dataSources, context }) =>
       dataSources.route53API.createRecordSet(RecordSet, context),
   },

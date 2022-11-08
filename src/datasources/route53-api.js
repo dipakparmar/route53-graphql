@@ -326,18 +326,52 @@ class Route53API extends RESTDataSource {
     return recordsets;
   }
 
-  async updateRecordSet(hostedzone_id, recordset, comment) {
+  async updateRecordSets(hostedzone_id, recordset, comment) {
     this.setParams();
     this.setupClient();
     let changeInfo;
-    let { name, type, ttl, values } = recordset;
-    // values is type of string or string[], map them as {Value: value} in ResourceRecord[]
-    let resource_records = [];
-    if (typeof values === "string") {
-      resource_records.push({ Value: values });
+    let changes = [];
+
+    // check if the recordset is an array or not
+    if (Array.isArray(recordset)) {
+      recordset.forEach((record) => {
+        let resource_records = [];
+        let { name, type, ttl, values } = record;
+        if (Array.isArray(values)) {
+          values.forEach((value) => {
+            resource_records.push({ Value: value });
+          });
+        } else {
+          resource_records.push({ Value: values });
+        }
+        changes.push({
+          Action: "UPSERT",
+          ResourceRecordSet: {
+            Name: name,
+            Type: type,
+            TTL: ttl,
+            ResourceRecords: resource_records,
+          },
+        });
+      });
     } else {
-      resource_records = values.map((value) => {
-        return { Value: value };
+      let resource_records = [];
+      let { name, type, ttl, values } = recordset;
+      if (Array.isArray(values)) {
+        values.forEach((value) => {
+          resource_records.push({ Value: value });
+        });
+      } else {
+        resource_records.push({ Value: values });
+      }
+      changes.push({
+        Action: "UPSERT",
+        ResourceRecordSet: {
+          Name: name,
+          Type: type,
+          TTL: ttl,
+          ResourceRecords: resource_records,
+        },
       });
     }
 
@@ -346,18 +380,8 @@ class Route53API extends RESTDataSource {
         new ChangeResourceRecordSetsCommand({
           HostedZoneId: hostedzone_id,
           ChangeBatch: {
-            Changes: [
-              {
-                Action: "UPSERT",
-                ResourceRecordSet: {
-                  Name: name,
-                  Type: type,
-                  TTL: ttl,
-                  ResourceRecords: resource_records,
-                },
-              },
-            ],
-            ...comment && { Comment: comment },
+            Changes: changes,
+            ...(comment && { Comment: comment }),
           },
         })
       );
