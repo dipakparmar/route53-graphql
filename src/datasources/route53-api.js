@@ -410,6 +410,43 @@ class Route53API extends RESTDataSource {
     }
     return dnssec;
   }
+
+  // enable DNSSEC for a hosted zone
+  async enableDNSSEC(hostedzone_id) {
+    this.setParams();
+    this.setupClient();
+    let hostedzone = [];
+    try {
+      let data = await this.client.send(
+        new EnableHostedZoneDNSSECCommand({
+          HostedZoneId: hostedzone_id,
+        })
+      );
+      hostedzone = data.HostedZone;
+    } catch (err) {
+      console.log("Error", err);
+    }
+    return hostedzone;
+  }
+
+  // disable DNSSEC for a hosted zone
+  async disableDNSSEC(hostedzone_id) {
+    this.setParams();
+    this.setupClient();
+    let hostedzone = [];
+    try {
+      let data = await this.client.send(
+        new DisableHostedZoneDNSSECCommand({
+          HostedZoneId: hostedzone_id,
+        })
+      );
+      hostedzone = data.HostedZone;
+    } catch (err) {
+      console.log("Error", err);
+    }
+    return hostedzone;
+  }
+
 }
 
 module.exports = Route53API;

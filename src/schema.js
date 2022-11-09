@@ -23,10 +23,19 @@ const typeDefs = gql`
     ): HostedZone
     update_hostedzone(id: String!, comment: String!): HostedZone
     delete_hostedzone(id: String!): ChangeInfoResponse
-    insert_reusable_delegation_set(caller_reference: String!, hostedzone_id: String): ReusableDelegationSetResponse
+    insert_reusable_delegation_set(
+      caller_reference: String!
+      hostedzone_id: String
+    ): ReusableDelegationSetResponse
     delete_reusable_delegation_set(id: String!): GeneralResponse
     insert_recordset(RecordSet: RecordSetInput!): RecordSet
-    update_recordsets(hostedzone_id: String!, RecordSet: [RecordSetInput!], comment: String): ChangeInfoResponse
+    update_recordsets(
+      hostedzone_id: String!
+      RecordSet: [RecordSetInput!]
+      comment: String
+    ): ChangeInfoResponse
+    enable_dnssec_hostedzone(hostedzone_id: String!): ChangeInfoResponse
+    disable_dnssec_hostedzone(hostedzone_id: String!): ChangeInfoResponse
   }
 
   type HostedZone {

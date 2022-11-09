@@ -63,5 +63,17 @@ module.exports = {
       dataSources.route53API.updateRecordSets(hostedzone_id, RecordSet, comment, context),
     insert_recordset: async (_, { RecordSet }, { dataSources, context }) =>
       dataSources.route53API.createRecordSet(RecordSet, context),
+    enable_dnssec_hostedzone: async (
+      _,
+      { hostedzone_id },
+      { dataSources, context }
+    ) =>
+      dataSources.route53API.enableDNSSEC(hostedzone_id, context),
+    disable_dnssec_hostedzone: async (
+      _,
+      { hostedzone_id },
+      { dataSources, context }
+    ) =>
+      dataSources.route53API.disableDNSSEC(hostedzone_id, context)
   },
 };
