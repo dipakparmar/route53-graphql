@@ -14,10 +14,11 @@ wrangler dev
 
 ### Global Headers
 
-| Header Name       | Value | Type   | Description               |
-| ----------------- | ----- | ------ | ------------------------- |
-| `X-ACCESS-KEY`    |       | String | ACCESS Key of IAM USER    |
-| `X-ACCESS-SECRET` |       | String | ACCESS SECRET OF IAM USER |
+| Header Name       | Value | Type   | Description                                                    |
+| ----------------- | ----- | ------ | -------------------------------------------------------------- |
+| `X-ACCESS-KEY`    |       | String | ACCESS Key of IAM USER (Required)                              |
+| `X-ACCESS-SECRET` |       | String | ACCESS SECRET Of IAM USER (Required)                           |
+| 'X-SESSION-TOKEN' |       | String | SESSION TOKEN Of IAM USER (If using Temporary IAM Credentials) |
 
 ## License
 
