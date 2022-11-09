@@ -13,6 +13,8 @@ module.exports = {
       { id },
       { dataSources, context }
     ) => dataSources.route53API.getReusableDelegationSetLimit(id, context),
+    dnssec: async (_, { hostedzone_id }, { dataSources, context }) =>
+      dataSources.route53API.getDNSSEC(hostedzone_id, context)
   },
 
   Mutation: {

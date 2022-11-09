@@ -12,6 +12,7 @@ import {
   CreateHostedZoneCommand,
   DeleteHostedZoneCommand,
   UpdateHostedZoneCommentCommand,
+  GetDNSSECCommand,
 } from "@aws-sdk/client-route-53";
 
 class Route53API extends RESTDataSource {
@@ -390,6 +391,24 @@ class Route53API extends RESTDataSource {
       console.log("Error", err);
     }
     return changeInfo;
+  }
+
+  // get DNSSEC
+  async getDNSSEC(hostedzone_id) {
+    this.setParams();
+    this.setupClient();
+    let dnssec = [];
+    try {
+      let data = await this.client.send(
+        new GetDNSSECCommand({
+          HostedZoneId: hostedzone_id,
+        })
+      );
+      dnssec = data;
+    } catch (err) {
+      console.log("Error", err);
+    }
+    return dnssec;
   }
 }
 

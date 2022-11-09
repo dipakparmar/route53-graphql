@@ -9,6 +9,7 @@ const typeDefs = gql`
     resusable_delegation_set_limit(
       id: String
     ): ReusableDelegationSetLimitResponse
+    dnssec(hostedzone_id: String!): GetDNSSECResponse
   }
 
   type Mutation {
@@ -102,6 +103,34 @@ const typeDefs = gql`
   input PrivateHostedVPC {
     VPCId: String
     VPCRegion: String
+  }
+
+  type DNSSECStatus {
+    ServerSignature: String
+    StatusMessage: String
+  }
+
+  type KeySigningKey {
+    Name: String
+    KmsArn: String
+    Flag: Int
+    SigningAlgorithmMnemonic: String
+    SigningAlgorithmType: Int
+    DigestAlgorithmMnemonic: String
+    DigestAlgorithmType: Int
+    KeyTag: Int
+    PublicKey: String
+    DSRecord: String
+    DNSKEYRecord: String
+    Status: String
+    StatusMessage: String
+    CreatedDate: String
+    LastModifiedDate: String
+  }
+
+  type GetDNSSECResponse {
+    Status: DNSSECStatus
+    KeySigningKeys: [KeySigningKey]
   }
 `;
 
