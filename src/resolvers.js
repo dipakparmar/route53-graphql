@@ -87,6 +87,13 @@ module.exports = {
         name,
         status,
         context
-      )
+      ),
+      delete_keysigningkey: async (
+        _,
+        { hostedzone_id, id },
+        { dataSources, context }
+      ) =>
+        dataSources.route53API.deleteKeySigningKey(hostedzone_id, id, context)
+
   },
 };

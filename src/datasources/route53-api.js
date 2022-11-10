@@ -16,6 +16,7 @@ import {
   EnableHostedZoneDNSSECCommand,
   DisableHostedZoneDNSSECCommand,
   CreateKeySigningKeyCommand,
+  DeleteKeySigningKeyCommand,
 } from "@aws-sdk/client-route-53";
 
 class Route53API extends RESTDataSource {
@@ -481,6 +482,53 @@ class Route53API extends RESTDataSource {
           KeyManagementServiceArn: keymanagement_service_arn,
           Name: name,
           Status: status,
+        })
+      );
+      response = data;
+    } catch (err) {
+      console.log("Error", err);
+    }
+    return response;
+  }
+
+  /**
+   * Delete Key Signing Key (KSK) for a hosted zone
+   * @function deleteKeySigningKey
+   * @param {string} hostedzone_id - Hosted zone ID
+   * @param {string} key_signing_key_id - Key Signing Key ID
+   * @returns {object} - Returns the Object with ChangeInfo, KeySigningKey, and Location
+   * @example
+   * let hostedzone_id = "Z1H1FL5HABSF5";
+   * let key_signing_key_id = "Z1H1FL5HABSF5";
+   * let response = await route53.deleteKeySigningKey(hostedzone_id, key_signing_key_id);
+   * console.log(response);
+   * // {
+   * //   ChangeInfo: {
+   * //     Id: '/change/C1H1FL5HABSF5',
+   * //     Status: 'PENDING',
+   * //     SubmittedAt: 2021-05-18T15:00:00.000Z
+   * //   },
+   * //   KeySigningKey: {
+   * //     CallerReference: '2021-05-18T15:00:00.000Z',
+   * //     CreationTime: 2021-05-18T15:00:00.000Z,
+   * //     HostedZoneId: 'Z1H1FL5HABSF5',
+   * //     Id: 'Z1H1FL5HABSF5',
+   * //     KeyManagementServiceArn: 'arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234-1234-123456789012',
+   * //     Name: 'example.com.',
+   * //     Status: 'ACTIVE'
+   * //   },
+   * //   Location: '/2020-05-18/keysigningkey/Z1H1FL5HABSF5'
+   * // }
+   */
+  async deleteKeySigningKey(hostedzone_id, key_signing_key_id) {
+    this.setParams();
+    this.setupClient();
+    let response;
+    try {
+      let data = await this.client.send(
+        new DeleteKeySigningKeyCommand({
+          HostedZoneId: hostedzone_id,
+          KeySigningKeyId: key_signing_key_id,
         })
       );
       response = data;

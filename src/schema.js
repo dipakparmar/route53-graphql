@@ -43,6 +43,10 @@ const typeDefs = gql`
       nane: String!
       status: String!
     ): KSKChangeInfoResponse
+    delete_keysigningkey(
+      hostedzone_id: String!
+      key_signing_key_id: String!
+    ): KSKChangeInfoResponse
   }
 
   type HostedZone {
