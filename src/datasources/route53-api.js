@@ -72,7 +72,7 @@ class Route53API extends RESTDataSource {
         delegationsets = delegationsets.concat(data.DelegationSets);
       }
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     }
     return delegationsets;
   }
@@ -89,7 +89,7 @@ class Route53API extends RESTDataSource {
       );
       delegationset = data.DelegationSet;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     }
     return delegationset;
   }
@@ -107,7 +107,7 @@ class Route53API extends RESTDataSource {
       );
       limit = data;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     }
     return limit;
   }
@@ -125,7 +125,7 @@ class Route53API extends RESTDataSource {
       );
       delegationset = data;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     }
     return delegationset;
   }
@@ -142,7 +142,7 @@ class Route53API extends RESTDataSource {
       );
       result = data;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     }
     result.Status = "SUBMITTED";
     result.Message = "Delegation set deletion has been submitted";
@@ -170,7 +170,7 @@ class Route53API extends RESTDataSource {
         hostedzones = hostedzones.concat(data.HostedZones);
       }
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     }
     return hostedzones;
   }
@@ -210,7 +210,7 @@ class Route53API extends RESTDataSource {
       );
       hostedzone = data.HostedZone;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     }
     return hostedzone;
   }
@@ -228,7 +228,7 @@ class Route53API extends RESTDataSource {
       );
       hostedzone = data.HostedZone;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     }
     return hostedzone;
   }
@@ -245,7 +245,7 @@ class Route53API extends RESTDataSource {
       );
       hostedzone_change_info = data.ChangeInfo;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     }
     return hostedzone_change_info;
   }
@@ -273,7 +273,7 @@ class Route53API extends RESTDataSource {
         recordsets = recordsets.concat(data.ResourceRecordSets);
       }
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     }
     return recordsets;
   }
@@ -303,7 +303,7 @@ class Route53API extends RESTDataSource {
       );
       recordsets = data.ResourceRecordSets;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     }
     return recordsets;
   }
@@ -333,7 +333,7 @@ class Route53API extends RESTDataSource {
       );
       recordsets = data.ResourceRecordSets;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     }
     return recordsets;
   }
@@ -399,7 +399,7 @@ class Route53API extends RESTDataSource {
       );
       changeInfo = data.ChangeInfo;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     }
     return changeInfo;
   }
@@ -417,7 +417,7 @@ class Route53API extends RESTDataSource {
       );
       dnssec = data;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     }
     return dnssec;
   }
@@ -435,7 +435,7 @@ class Route53API extends RESTDataSource {
       );
       hostedzone = data.HostedZone;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     }
     return hostedzone;
   }
@@ -453,7 +453,7 @@ class Route53API extends RESTDataSource {
       );
       hostedzone = data.HostedZone;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     }
     return hostedzone;
   }
@@ -493,7 +493,7 @@ class Route53API extends RESTDataSource {
       );
       response = data;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     }
     return response;
   }
@@ -540,7 +540,7 @@ class Route53API extends RESTDataSource {
       );
       response = data;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     }
     return response;
   }
@@ -588,7 +588,7 @@ class Route53API extends RESTDataSource {
       );
       response = data;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     }
     return response;
   }
@@ -636,7 +636,7 @@ class Route53API extends RESTDataSource {
       );
       response = data;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     }
     return response;
   }
