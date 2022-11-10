@@ -44,6 +44,10 @@ class Route53API extends RESTDataSource {
     });
   }
 
+  async generateCallerReference() {
+    return "" + Date.now().toLocaleString();
+  }
+
   async getReusableDelegationSets() {
     this.setParams();
     this.setupClient();
