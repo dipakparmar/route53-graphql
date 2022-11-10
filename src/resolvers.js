@@ -108,18 +108,22 @@ module.exports = {
     ) => dataSources.route53API.deleteKeySigningKey(hostedzone_id, id, context),
     activate_keysigningkey: async (
       _,
-      { hostedzone_id, id },
+      { hostedzone_id, key_signing_key_id },
       { dataSources, context }
     ) =>
-      dataSources.route53API.activateKeySigningKey(hostedzone_id, id, context),
+      dataSources.route53API.activateKeySigningKey(
+        hostedzone_id,
+        key_signing_key_id,
+        context
+      ),
     deactivate_keysigningkey: async (
       _,
-      { hostedzone_id, id },
+      { hostedzone_id, key_signing_key_id },
       { dataSources, context }
     ) =>
       dataSources.route53API.deactivateKeySigningKey(
         hostedzone_id,
-        id,
+        key_signing_key_id,
         context
       ),
   },

@@ -47,11 +47,11 @@ const typeDefs = gql`
       hostedzone_id: String!
       key_signing_key_id: String!
     ): KSKChangeInfoResponse
-    activate_keysigingkey(
+    activate_keysigningkey(
       hostedzone_id: String!
       key_signing_key_id: String!
     ): KSKChangeInfoResponse
-    deactivate_keysigingkey(
+    deactivate_keysigningkey(
       hostedzone_id: String!
       key_signing_key_id: String!
     ): KSKChangeInfoResponse

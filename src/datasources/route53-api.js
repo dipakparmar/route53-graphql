@@ -575,23 +575,23 @@ class Route53API extends RESTDataSource {
    * // }
    *
    */
-  async activateKeySigningKey(hostedzone_id, key_signing_key_id) {
-    this.setParams();
-    this.setupClient();
-    let response;
-    try {
-      let data = await this.client.send(
-        new ActivateKeySigningKeyCommand({
-          HostedZoneId: hostedzone_id,
-          KeySigningKeyId: key_signing_key_id,
-        })
-      );
-      response = data;
-    } catch (err) {
-      console.error("Error", err);
-    }
-    return response;
-  }
+  // async activateKeySigningKey(hostedzone_id, key_signing_key_id) {
+  //   this.setParams();
+  //   this.setupClient();
+  //   let response;
+  //   try {
+  //     let data = await this.client.send(
+  //       new ActivateKeySigningKeyCommand({
+  //         HostedZoneId: hostedzone_id,
+  //         KeySigningKeyId: key_signing_key_id,
+  //       })
+  //     );
+  //     response = data;
+  //   } catch (err) {
+  //     console.error("Error", err);
+  //   }
+  //   return response;
+  // }
 
   /**
    * Deactivate Key Signing Key (KSK) for a hosted zone
@@ -623,23 +623,23 @@ class Route53API extends RESTDataSource {
    * // }
    *
    */
-  async deactivateKeySigningKey(hostedzone_id, key_signing_key_id) {
-    this.setParams();
-    this.setupClient();
-    let response;
-    try {
-      let data = await this.client.send(
-        new DeactivateKeySigningKeyCommand({
-          HostedZoneId: hostedzone_id,
-          KeySigningKeyId: key_signing_key_id,
-        })
-      );
-      response = data;
-    } catch (err) {
-      console.error("Error", err);
-    }
-    return response;
-  }
+  // async deactivateKeySigningKey(hostedzone_id, key_signing_key_id) {
+  //   this.setParams();
+  //   this.setupClient();
+  //   let response;
+  //   try {
+  //     let data = await this.client.send(
+  //       new DeactivateKeySigningKeyCommand({
+  //         HostedZoneId: hostedzone_id,
+  //         KeySigningKeyId: key_signing_key_id,
+  //       })
+  //     );
+  //     response = data;
+  //   } catch (err) {
+  //     console.error("Error", err);
+  //   }
+  //   return response;
+  // }
 }
 
 module.exports = Route53API;
