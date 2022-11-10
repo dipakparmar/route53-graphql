@@ -13,6 +13,9 @@ import {
   DeleteHostedZoneCommand,
   UpdateHostedZoneCommentCommand,
   GetDNSSECCommand,
+  EnableHostedZoneDNSSECCommand,
+  DisableHostedZoneDNSSECCommand,
+  CreateKeySigningKeyCommand,
 } from "@aws-sdk/client-route-53";
 
 class Route53API extends RESTDataSource {
@@ -445,6 +448,46 @@ class Route53API extends RESTDataSource {
       console.log("Error", err);
     }
     return hostedzone;
+  }
+
+  /**
+   * Create Key Signing Key (KSK) for a hosted zone
+   * @function createKeySigningKey
+   * @param {string} caller_reference - Caller reference for the request
+   * @param {string} hostedzone_id - Hosted zone ID
+   * @param {string} keymanagement_service_arn - Key Management Service (KMS) ARN
+   * @param {string} name - Name of the key signing key
+   * @param {string} status - Status of the key signing key
+   * @returns {object} - Returns the Obbject with ChangeInfo, KeySigningKey, and Location
+   *
+   */
+  async createKeySigningKey(
+    caller_reference,
+    hostedzone_id,
+    keymanagement_service_arn,
+    name,
+    status
+  ) {
+    this.setParams();
+    this.setupClient();
+    let response;
+    try {
+      let data = await this.client.send(
+        new CreateKeySigningKeyCommand({
+          CallerReference: caller_reference
+            ? caller_reference
+            : await this.generateCallerReference(),
+          HostedZoneId: hostedzone_id,
+          KeyManagementServiceArn: keymanagement_service_arn,
+          Name: name,
+          Status: status,
+        })
+      );
+      response = data;
+    } catch (err) {
+      console.log("Error", err);
+    }
+    return response;
   }
 
 }

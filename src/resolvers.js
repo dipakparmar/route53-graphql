@@ -74,6 +74,19 @@ module.exports = {
       { hostedzone_id },
       { dataSources, context }
     ) =>
-      dataSources.route53API.disableDNSSEC(hostedzone_id, context)
+      dataSources.route53API.disableDNSSEC(hostedzone_id, context),
+    insert_keysigningkey: async (
+      _,
+      { caller_reference, hostedzone_id, keymanagement_service_arn, name, status },
+      { dataSources, context }
+    ) =>
+      dataSources.route53API.createKeySigningKey(
+        caller_reference,
+        hostedzone_id,
+        keymanagement_service_arn,
+        name,
+        status,
+        context
+      )
   },
 };

@@ -36,6 +36,13 @@ const typeDefs = gql`
     ): ChangeInfoResponse
     enable_dnssec_hostedzone(hostedzone_id: String!): ChangeInfoResponse
     disable_dnssec_hostedzone(hostedzone_id: String!): ChangeInfoResponse
+    insert_keysigningkey(
+      caller_reference: String
+      hostedzone_id: String!
+      keymanagement_service_arn: String!
+      nane: String!
+      status: String!
+    ): KSKChangeInfoResponse
   }
 
   type HostedZone {
@@ -102,6 +109,12 @@ const typeDefs = gql`
     Status: String
     SubmittedAt: String
     Comment: String
+  }
+
+  type KSKChangeInfoResponse {
+    ChangeInfo: ChangeInfoResponse
+    KeySigningKey: KeySigningKey
+    Location: String
   }
 
   type GeneralResponse {
