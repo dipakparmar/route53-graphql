@@ -17,8 +17,7 @@
     "graphql": "^16.5.0"
   },
   "devDependencies": {
-    "prettier": "^2.4.1",
-    "webpack": "^5.56.0"
+    "prettier": "^2.4.1"
   },
   "scripts": {
     "dev": "wrangler dev",
