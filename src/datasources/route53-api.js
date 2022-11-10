@@ -43,6 +43,7 @@ class Route53API extends RESTDataSource {
         secretAccessKey: this.params.secretAccessKey,
         sessionToken: this.params.sessionToken,
       },
+      customUserAgent: "route53.dipak.io (Language=JavaScript) (Version=1.0.0)",
     });
   }
 
