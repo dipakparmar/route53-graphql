@@ -13,7 +13,7 @@
   "dependencies": {
     "@aws-sdk/client-route-53": "^3.335.0",
     "apollo-datasource-rest": "^3.2.0",
-    "apollo-server-cloudflare": "^3.12.0",
+    "apollo-server-cloudflare": "^3.12.1",
     "graphql": "^16.5.0"
   },
   "devDependencies": {
