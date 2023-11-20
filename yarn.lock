@@ -991,19 +991,19 @@ apollo-reporting-protobuf@^3.4.0:
   dependencies:
     "@apollo/protobufjs" "1.2.6"
 
-apollo-server-cloudflare@^3.12.0:
-  version "3.12.0"
-  resolved "https://registry.yarnpkg.com/apollo-server-cloudflare/-/apollo-server-cloudflare-3.12.0.tgz#3d1f990b812ccb486b53915801ce9e2a845472e7"
-  integrity sha512-o1Y5IzlnBoZZC21EqPwXCWBBOKG/hTWooKbK77VQ7Hesm2NNiihtigh8///JFGO1qhr9xDEMvm0U8fvNbC2xSA==
+apollo-server-cloudflare@^3.13.0:
+  version "3.13.0"
+  resolved "https://registry.yarnpkg.com/apollo-server-cloudflare/-/apollo-server-cloudflare-3.13.0.tgz#9efd5fe7e90fc4c0fa062aa3672dd8fcbfe2e37c"
+  integrity sha512-qGJRDEkA+CdMTJRhvJgBUxmPxyHmq8uP8xm/HMo8k7BDuepcJCV7v6woGfPz3FEwhiZrDiFXqN+lqglBbF+xMQ==
   dependencies:
-    apollo-server-core "^3.12.0"
+    apollo-server-core "^3.13.0"
     apollo-server-env "^4.2.1"
     apollo-server-types "^3.8.0"
 
-apollo-server-core@^3.12.0:
-  version "3.12.0"
-  resolved "https://registry.yarnpkg.com/apollo-server-core/-/apollo-server-core-3.12.0.tgz#8aa2a7329ce6fe1823290c45168c749db01548df"
-  integrity sha512-hq7iH6Cgldgmnjs9FVSZeKWRpi0/ZR+iJ1arzeD2VXGxxgk1mAm/cz1Tx0TYgegZI+FvvrRl0UhKEx7sLnIxIg==
+apollo-server-core@^3.13.0:
+  version "3.13.0"
+  resolved "https://registry.yarnpkg.com/apollo-server-core/-/apollo-server-core-3.13.0.tgz#ad6601fbb34cc97eedca27a9fb0b5738d11cd27d"
+  integrity sha512-v/g6DR6KuHn9DYSdtQijz8dLOkP78I5JSVJzPkARhDbhpH74QNwrQ2PP2URAPPEDJ2EeZNQDX8PvbYkAKqg+kg==
   dependencies:
     "@apollo/utils.keyvaluecache" "^1.0.1"
     "@apollo/utils.logger" "^1.0.0"
