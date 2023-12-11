@@ -17,7 +17,7 @@
     "graphql": "^16.8.1"
   },
   "devDependencies": {
-    "prettier": "^3.1.0"
+    "prettier": "^3.1.1"
   },
   "scripts": {
     "dev": "wrangler dev",
